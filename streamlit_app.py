@@ -185,7 +185,7 @@ with top_left_cell:
         "Time horizon",
         options=list(horizon_map.keys()),
         default="6 Months",
-    )
+    ) or "6 Months"
 
 tickers = [t.upper() for t in tickers]
 
@@ -217,7 +217,7 @@ def load_data(tickers, period):
 
 # Load the data
 try:
-    data = load_data(tickers, horizon_map[horizon])
+    data = load_data(tickers, horizon_map[horizon]).dropna()
 except yf.exceptions.YFRateLimitError as e:
     st.warning("YFinance is rate-limiting us :(\nTry again later.")
     load_data.clear()  # Remove the bad cache entry.
